@@ -1,22 +1,39 @@
 window.onload = function(){
-    
-  var http = new XMLHttpRequest();
   
-  http.onreadystatechange = function(){
-      if(http.readyState == 4 && http.status == 200){
-          //console.log(JSON.parse(http.response));
-      }
-  };
+  function handleError(jqXHR, textStatus, error){
+    console.log(error)
+  }
   
-  http.open("GET", "dataz/tweets.json" , true);
-  
-  http.send();
-  
-  //jquery method
-  $.get("data/tweets.json", function(data){
-     console.log(data); 
+  $.ajax({
+    type:"GET",
+    url:"dataz/tweets.json",
+    success: cbTweets,
+    error: handleError
   });
-  console.log("test");
+  
+  function cbTweets(data){
+      console.log(data);
+      
+      $.ajax({
+        type:"GET",
+        url:"dataz/friends.json",
+        success: cbFriends,
+        error: handleError
+      });
+    }
+    function cbFriends(data){
+          console.log(data);
+          
+          $.ajax({
+            type:"GET",
+            url:"dataz/videos.json",
+            success: function(data){
+              console.log(data);
+            },
+            error: handleError
+          });
+        }
+
 };
 /* Ready States
 
@@ -26,3 +43,25 @@ window.onload = function(){
 3-request is in process
 4-request is complete
 */
+
+
+// var fruits = ["banana", "apple", "pear"];
+//   fruits.forEach(function(val){
+//     console.log(val);
+//   });
+
+  // function callback(val){
+  //   console.log(val);
+  // }
+  
+  // var fruits = ["banana", "apple", "pear"];
+  // fruits.forEach(callback);
+  // console.log("done")
+  
+    // function cb(data){
+  //   console.lgog(data);
+  // }
+  // $.get("dataz/tweets.json", function(data){
+  //   console.log(data)
+  // });
+  // console.log("test");
