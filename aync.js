@@ -1,14 +1,18 @@
 window.onload = function(){
+
+function* gen(){
+  var x = yield 10;
+  console.log(x);
   
-  $.get("dataz/tweets.json").then(function(tweets){
-    console.log(tweets);
-    return $.get("dataz/friends.json");
-  }).then(function(friends){
-    console.log(friends);
-    return $.get("dataz/videos.json");
-  }).then(function(videos){
-    console.log(videos);
-  });
+}
+//gets generator ready does not run
+var myGen = gen();
+//runs generator
+console.log(myGen.next());
+console.log(myGen.next(10));
+};
+
+
   
   // function get(url){
   //   return new Promise(function(resolve, reject){
@@ -41,7 +45,7 @@ window.onload = function(){
   // }).catch(function(error){
   //   console.log(error);
   // });
-};
+
 /* Ready States
 
 0-request not initialized
